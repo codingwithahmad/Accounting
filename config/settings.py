@@ -79,9 +79,9 @@ DATABASES = {
     'default':
              {
                 'ENGINE': 'django.db.backends.mysql',
-                'NAME': config('NAME'),
-                'USER': config('USER'),
-                'PASSWORD': config('PASSWORD'),
+                'NAME': config('DB_NAME'),
+                'USER': config('DB_USER'),
+                'PASSWORD': config('DB_PASSWORD'),
                 'HOST': 'localhost',
                 'PORT': '3306',
              },
@@ -124,6 +124,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+AUTH_USER_MODEL = 'user.User'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
