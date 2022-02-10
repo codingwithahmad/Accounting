@@ -1,0 +1,17 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.title|attr:"placeholder: title" }}
+        {{ form.spending|attr:"placeholder: Spending" }}
+        {{ form.income|attr:"placeholder: Income" }}
+        <input type="submit" value="Create" >
+    </form>
+</body>
+</html>
