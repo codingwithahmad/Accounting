@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Sabts</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Income</th>
+            <th>Spending</th>
+        </tr>
+        {% for sabt in object_list %}
+            <tr>
+                <td>{{sabt.title}}</td>
+                <td>{{sabt.income}}</td>
+                <td>{{sabt.spending}}</td>
+            </tr>
+       {% endfor %}
+    </table>   
+</body>
+</html>
