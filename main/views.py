@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Sabt
 from django.urls import reverse
+from main.forms import SabtForm
 from django.views.generic import View, CreateView, ListView
 # Create your views here.
 
@@ -14,8 +15,8 @@ class Home(View):
 
 class CreateSabt(CreateView):
     template_name = "main/create_sabt.html"
-    model = Sabt
-    fields = "__all__"
+    form_class = SabtForm
+
 
     def get_success_url(self):
         return reverse('main:Home')
