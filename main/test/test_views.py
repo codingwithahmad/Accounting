@@ -23,3 +23,23 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/all_sabt.html')
+
+
+    def test_create_sabt_GET(self):
+        response = self.client.get(self.create_sabt)
+
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main/create_sabt.html')
+
+    def test_create_sabt_POST(self):
+        response = self.client.post('http://127.0.0.1:8000/create' ,{
+            'title': 'fruit',
+            'income':0,
+            'spending':25000,
+            'date': timezone.now()
+        })
+        
+
+
+        self.assertEquals(Sabt.objects.last().title, 'fruit')
