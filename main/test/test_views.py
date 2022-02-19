@@ -39,7 +39,9 @@ class TestViews(TestCase):
             'spending':25000,
             'date': timezone.now()
         })
-        
 
 
+        self.assertEquals(response.status_code, 302)
         self.assertEquals(Sabt.objects.last().title, 'fruit')
+
+
