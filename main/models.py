@@ -7,3 +7,7 @@ class Sabt(models.Model):
     income = models.IntegerField()
     spending = models.IntegerField()
     date = models.DateTimeField(default=timezone.now)
+
+
+    def __str__(self):
+        return self.title
