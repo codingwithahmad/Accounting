@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Sabt
 from django.urls import reverse
 from main.forms import SabtForm
-from django.views.generic import View, CreateView, ListView
+from django.views.generic import View, CreateView, ListView, DetailView
 # Create your views here.
 
 
@@ -25,3 +25,10 @@ class CreateSabt(CreateView):
 class AllSabt(ListView):
     template_name = "main/all_sabt.html"
     model = Sabt
+
+
+class Sabt(DetailView):
+    template_name = "main/sabt_details.html"
+    model = Sabt
+
+
