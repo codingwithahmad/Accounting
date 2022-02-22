@@ -17,7 +17,6 @@ class CreateSabt(CreateView):
     template_name = "main/create_sabt.html"
     form_class = SabtForm
 
-
     def get_success_url(self):
         return reverse('main:Home')
 
@@ -30,5 +29,3 @@ class AllSabt(ListView):
 class Sabt(DetailView):
     template_name = "main/sabt_details.html"
     model = Sabt
-
-
