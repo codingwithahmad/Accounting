@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Sabt
+from .models import Sabt, Category
 from django.urls import reverse
 from main.forms import SabtForm
 from django.views.generic import View, CreateView, ListView, DetailView
@@ -20,6 +20,14 @@ class CreateSabt(CreateView):
     def get_success_url(self):
         return reverse('main:Home')
 
+
+class CreateCategory(CreateView):
+    template_name = "main/create_cats.html"
+    model = Category
+    fields = ['title', 'slug', 'parent']
+
+    def get_success_url(self):
+        return reverse('main:Home')
 
 class AllSabt(ListView):
     template_name = "main/all_sabt.html"
