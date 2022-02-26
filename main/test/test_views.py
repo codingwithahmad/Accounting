@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from main.models import Sabt
+from main.models import Sabt, Category
 from django.utils import timezone
 
 
@@ -31,15 +31,17 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'main/create_sabt.html')
 
     def test_create_sabt_POST(self):
-        response = self.client.post('http://127.0.0.1:8000/create' ,{
-            'title': 'fruit',
+        category = Category.objects.create(title="fruit", slug="fruit")
+        response = self.client.post(reverse('main:CreateSabt') ,{
+            'title':'banana',
             'income':0,
-            'spending':25000,
-            'date': timezone.now()
+            'spending':15000,
+            'date': timezone.now(),
+            'cats': category.pk
         })
 
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(Sabt.objects.last().title, 'fruit')
+        self.assertEquals(Sabt.objects.last().title, 'banana')
 
     def test_detail_sabt_GET(self):
         """
