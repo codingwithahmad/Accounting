@@ -45,10 +45,33 @@ class TestViews(TestCase):
 
     def test_detail_sabt_GET(self):
         """
-        This function is test main app and Sabt urls view
+        This function test main app and Sabt urls view
         """
-        #Sabt.objects.create(pk=5, title='kobideh', income=0, spending=200000)
+        Sabt.objects.create(pk=5, title='kobideh', income=0, spending=200000)
         response = self.client.get(self.detail_sabt)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/sabt_details.html')
+
+    def test_create_category_GET(self):
+        """
+        This function test get request to CreateCategory view
+        """
+        response = self.client.get(reverse('main:CreateCategory'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main/create_cats.html')
+
+    def test_create_category_POST(self):
+        """
+        This function test post request to CreateCategory view
+        """
+
+        response = self.client.post(reverse('main:CreateCategory'), {
+            "title": "IT",
+            "slug": "it"
+        })
+
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Category.objects.last().title, 'IT')
