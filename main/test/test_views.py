@@ -10,13 +10,14 @@ class TestViews(TestCase):
         self.client = Client()
         self.list_sabt = reverse('main:AllSabt')
         self.create_sabt = reverse('main:CreateSabt')
-        self.detail_sabt = reverse('main:Sabt', kwargs={'pk': 5})
+        self.cat = Category.objects.create(title='t_cat', slug='t_cat')
         self.Sabt1 = Sabt.objects.create(
             title="sabt",
             income=10000,
             spending=0,
             date=timezone.now()
         )
+        self.Sabt1.category.add(self.cat)
 
     def test_list_sabt_GET(self):
         response = self.client.get(self.list_sabt)
@@ -39,16 +40,17 @@ class TestViews(TestCase):
             'date': timezone.now(),
             'cats': category.pk
         })
-
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         self.assertEquals(Sabt.objects.last().title, 'banana')
 
     def test_detail_sabt_GET(self):
         """
         This function test main app and Sabt urls view
         """
-        Sabt.objects.create(pk=5, title='kobideh', income=0, spending=200000)
-        response = self.client.get(self.detail_sabt)
+        category = Category.objects.create(title="food", slug="food")
+        sabt = Sabt.objects.create(pk=5, title='kobideh', income=0, spending=200000)
+        sabt.category.add(category.pk)
+        response = self.client.get(reverse('main:Sabt', kwargs={'pk': 5}))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main/sabt_details.html')
@@ -75,3 +77,15 @@ class TestViews(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Category.objects.last().title, 'IT')
+
+    def test_category_sabt_GET(self):
+        """
+        This function test get request to CategorySabt view
+        """
+
+        response = self.client.get(reverse('main:CategorySabts', kwargs={'slug': 't_cat'}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main/category_list.html')
+
+

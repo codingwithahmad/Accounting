@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test import Client
 from django.urls import reverse, resolve
-from main.views import AllSabt, CreateSabt, Sabt, CreateCategory
+from main.views import AllSabt, create_sabt, Sabt, CreateCategory, CategorySabts
 
 
 class TestUrls(TestCase):
@@ -23,7 +23,7 @@ class TestUrls(TestCase):
 
     def test_CreateSabt_url_view(self):
         url = reverse("main:CreateSabt")
-        self.assertEqual(resolve(url).func.view_class, CreateSabt)
+        self.assertEqual(resolve(url).func, create_sabt)
 
     def test_Sabt_url_view(self):
         url = reverse("main:Sabt", kwargs={"pk": 5})
@@ -36,3 +36,7 @@ class TestUrls(TestCase):
     def test_CreateCat_url_view(self):
         url = reverse("main:CreateCategory")
         self.assertEqual(resolve(url).func.view_class, CreateCategory)
+
+    def test_category_sabt_url_view(self):
+        url = reverse("main:CategorySabts", kwargs={'slug': 't_cat'})
+        self.assertEqual(resolve(url).func.view_class, CategorySabts)
