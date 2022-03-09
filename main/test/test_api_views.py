@@ -16,10 +16,18 @@ class SabtTests(APITestCase):
 
     def test_get_all_sabts(self):
         """
-        Ensure get request to /api/sabts get all sabts
+        Ensure get request to /api/sabts get all sabts and status_code is 200
         """
 
         url = reverse("main:api_sabts_list")
         response = self.client.get(url, format='json')
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(len(response.data), 1)
+
+    def test_sabt_retrieve_api_view(self):
+        """
+        This function test retrieve api view for Sabt model
+        """
+        url = reverse("main:api_sabts_retrieve", kwargs={'pk': 2})
+        response = self.client.get(url, format='json')
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
