@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+     <!-- Moment.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+    <title>Update - Sabt</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.title|attr:"placeholder: title" }}
+        {{ form.spending|attr:"placeholder: Spending" }}
+        {{ form.income|attr:"placeholder: Income" }}
+        {{ form.date }}
+        {{ form.cats }}
+        <input type="submit" value="Create" >
+    </form>
+</body>
+</html>
