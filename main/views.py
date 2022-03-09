@@ -4,8 +4,11 @@ from django.urls import reverse
 from main.forms import SabtForm
 from django.views.generic import View, CreateView, ListView, DetailView, UpdateView
 
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from .serializers import SabtSerializer
+from .serializers import SabtSerializer, CategorySerializer
 
 # Create your views here.
 
@@ -79,3 +82,15 @@ class RetrieveSabtAPIView(RetrieveAPIView):
     queryset = Sabt_model.objects.all()
     serializer_class = SabtSerializer
     lookup_fields = ['id']
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny, ))
+def get_categories(request):
+    """
+
+    List all categories
+    """
+    if request.method == "GET":
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
