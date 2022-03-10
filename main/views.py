@@ -3,9 +3,11 @@ from .models import Sabt as Sabt_model, Category
 from django.urls import reverse
 from main.forms import SabtForm
 from django.views.generic import View, CreateView, ListView, DetailView, UpdateView
+from django.http import JsonResponse
 
 from rest_framework import permissions
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import SabtSerializer, CategorySerializer
@@ -94,3 +96,37 @@ def get_categories(request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny, ))
+def get_category(request, pk):
+    """
+
+    Retrieve api view for show on category with pk
+    """
+
+    try:
+        category = Category.objects.get(pk=pk)
+    except Category.DoesNotExist:
+        return JsonResponse(data={"message": "There is no category with this id"}, status=404)
+
+    if request.method == "GET":
+        serializer = CategorySerializer(category)
+        return JsonResponse(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes((permissions.IsAuthenticatedOrReadOnly, ))
+def create_category(request):
+    """
+
+    Create view for category model
+    """
+    if request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = CategorySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+
+        return JsonResponse(serializer.error, status=400)
