@@ -1,16 +1,11 @@
 from django.urls import path
 from .views import (Home,
     create_sabt,
-    create_category,
-    get_category,
-    get_categories,
     CreateCategory,
     AllSabt,
     Sabt,
     CategorySabts,
     ModifySabt,
-    ListSabtAPIView,
-    RetrieveSabtAPIView,
 )
 
 
@@ -24,13 +19,4 @@ urlpatterns = [
     path("list/category/<slug:slug>", CategorySabts.as_view(), name="CategorySabts"),
     path("sabt/<int:pk>", Sabt.as_view(), name="Sabt"),
     path("sabt/update/<int:pk>", ModifySabt.as_view(), name="ModifySabt"),
-
-
-    # API urls
-
-    path("api/sabts", ListSabtAPIView.as_view(), name="api_sabts_list"),
-    path("api/sabts/<int:pk>", RetrieveSabtAPIView.as_view(), name="api_sabts_retrieve"),
-    path("api/categories", get_categories, name="api_categories_list"),
-    path("api/categories/<int:pk>", get_category, name="api_category_retrieve"),
-    path("api/categories/create", create_category, name="api_category_create"),
 ]
