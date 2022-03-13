@@ -1,6 +1,5 @@
 from main.models import Sabt as Sabt_model, Category
 
-from django.shortcuts import render
 from django.http import JsonResponse
 
 from rest_framework import permissions
@@ -12,10 +11,18 @@ from .serializers import SabtSerializer, CategorySerializer
 # Create your views here.
 
 class ListSabtAPIView(ListAPIView):
+    """
+
+    List of Sabts
+    """
     queryset = Sabt_model.objects.all()
     serializer_class = SabtSerializer
 
 class RetrieveSabtAPIView(RetrieveAPIView):
+    """
+
+    Return a Sabt object with specific id
+    """
     queryset = Sabt_model.objects.all()
     serializer_class = SabtSerializer
     lookup_fields = ['id']
