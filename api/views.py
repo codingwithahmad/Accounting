@@ -8,6 +8,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .serializers import SabtSerializer, CategorySerializer
+from .permissions import IsAuthorOrReadOnly
 # Create your views here.
 
 class ListSabtAPIView(ListAPIView):
@@ -26,6 +27,7 @@ class RetrieveSabtAPIView(RetrieveAPIView):
     queryset = Sabt_model.objects.all()
     serializer_class = SabtSerializer
     lookup_fields = ['id']
+    permission_classes = [IsAuthorOrReadOnly]
 
 @api_view(['POST'])
 @permission_classes((permissions.IsAuthenticatedOrReadOnly, ))
