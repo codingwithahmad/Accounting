@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from user.models import User
 
 # Create your models here.
 
@@ -21,6 +22,8 @@ class Sabt(models.Model):
     spending = models.IntegerField()
     category = models.ManyToManyField(Category, related_name="sabts")
     date = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, related_name="sabts", on_delete=models.CASCADE)
+
 
     def __str__(self):
-        return self.title
+        return self.title + "_" + self.author
