@@ -95,3 +95,34 @@ def create_category(request):
             return JsonResponse(serializer.data, status=201)
 
         return JsonResponse(serializer.error, status=400)
+
+@api_view(['PATCH, PUT'])
+@permission_classes((IsAuthorOrReadOnly, ))
+def update_sabt(request, pk):
+    """
+
+    Update and Partial Update Sabt record in db
+    """
+
+    try:
+        sabt = Sabt_model.objects.get(pk=pk)
+    except Sabt_model.DoesNotExist as e:
+        return JsonResponse({"Error": f"{e}"}, 404)
+
+    if request.method == "PUT":
+        data = JSONParser().parse(request)
+        serializer = SabtSerializer(sabt, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({}, status=204)
+
+        return JsonResponse(serializer.errors, status=400)
+
+    if request.method == "PATCH":
+        data = JSONParser().parse(request)
+        serializer = SabtSerializer(sabt, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({}, status=204)
+
+        return JsonResponse(serializer.errors, status=400)
